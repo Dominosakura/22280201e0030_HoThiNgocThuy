@@ -1,0 +1,124 @@
+﻿@using Candy.Models
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Candy.Models.User>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Admin";
+}
+
+<h2 class="mb-4 text-primary text-center">ACCOUNT MANAGEMENT</h2>
+
+<table class="table table-striped table-hover table-bordered">
+    <thead class="table-dark text-center">
+        <tr>
+            <th class="text-cream">Username</th>
+            <th class="text-cream">Password</th>
+            <th class="text-cream">Email</th>
+            <th class="text-cream">Full Name</th>
+            <th class="text-cream">Phone</th>
+            <th class="text-cream">Address</th>
+            <th class="text-cream">Avatar</th>
+            <th class="text-cream">Status</th>
+            <th class="text-cream">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center text-cream">@Html.DisplayFor(modelItem => item.Username)</td>
+                <td class="text-center text-cream">******</td>
+                <td class="text-cream">@Html.DisplayFor(modelItem => item.Email)</td>
+                <td class="text-cream">@Html.DisplayFor(modelItem => item.FullName)</td>
+                <td class="text-center text-cream">@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                <td class="text-cream">@Html.DisplayFor(modelItem => item.Address)</td>
+                <td class="text-center text-cream">
+                    @if (!string.IsNullOrEmpty(item.AvatarPath))
+                    {
+                        <img src="~/Images/Avatar/@item.AvatarPath" alt="Avatar" class="img-thumbnail" style="width: 50px; height: 50px;" />
+                    }
+                    else
+                    {
+                        <span>No Avatar</span>
+                    }
+                </td>
+                <td class="text-center text-cream">
+                    @if (item.Status == true)
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Inactive</span>
+                    }
+                </td>
+                <td class="text-center text-cream">
+                    <div class="d-flex justify-content-center">
+                        @using (Html.BeginForm("ToggleStatus", "Role", FormMethod.Post, new { area = "Admin" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("id", item.UserID)
+                            <button type="submit" class="btn btn-sm btn-warning me-2">
+                                @if (item.Status == true)
+                                {
+                                    <i class="bi bi-toggle-off"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-toggle-on"></i>
+                                }
+                            </button>
+                        }
+                <td>
+                  
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UserID }, new { @class = "btn btn-sm btn-primary" })
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.UserID }, new { @class = "btn btn-sm btn-danger" })
+                </td>
+
+                </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p class="text-center text-cream">
+    Page @Model.PageNumber / @Model.PageCount
+</p>
+
+<div class="d-flex justify-content-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), PagedListRenderOptions.Classic)
+</div>
+
+<style> 
+    body {
+        font-size: 13px;
+    }
+
+   
+    .text-cream {
+        font-size: 1.3em;
+    }
+
+    .table, .table th, .table td {
+        font-size: inherit;
+    }
+
+    
+    .btn {
+        font-size: inherit;
+    }
+
+  
+    .badge {
+        font-size: 1em;
+    }
+
+   
+    .img-thumbnail {
+        border-radius: 50%;
+        object-fit: cover;
+    }
+</style>

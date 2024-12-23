@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="421ef34ef08b4fa7967675796fef53c3" Name="Diagram1">
+        <EntityTypeShape EntityType="DECOMMERCEModel.Favorite" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.OrderDetail" Width="1.5" PointX="7.5" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.Order" Width="1.5" PointX="5.25" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.Payment" Width="1.5" PointX="7.5" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.ProductCategory" Width="1.5" PointX="8" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.ProductImage" Width="1.5" PointX="12.5" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.Product" Width="1.5" PointX="10.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.Promotion" Width="1.5" PointX="12.5" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.Review" Width="1.5" PointX="12.5" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.Role" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.Shipping" Width="1.5" PointX="7.5" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.ShoppingCart" Width="1.5" PointX="5.25" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.ShoppingCartItem" Width="1.5" PointX="12.5" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.UserAdmin" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DECOMMERCEModel.User" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__Favorites__Produ__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__Favorites__UserI__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__OrderDeta__Order__06CD04F7" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__OrderDeta__Produ__07C12930" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__Orders__BuyerID__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__Payments__OrderI__03F0984C" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__Shipping__OrderI__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__Products__Catego__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__ProductIm__Produ__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__Products__Seller__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__Promotion__Produ__25518C17" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__Reviews__Product__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__ShoppingC__Produ__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__Promotion__Selle__245D67DE" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__Reviews__UserID__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK_Users_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__ShoppingC__CartI__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="DECOMMERCEModel.FK__ShoppingC__UserI__5165187F" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

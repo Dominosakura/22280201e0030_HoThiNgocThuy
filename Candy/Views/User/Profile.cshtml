@@ -1,0 +1,154 @@
+﻿@model Candy.Models.User
+
+<h2 class="text-center mt-4">PROFILE </h2>
+
+<div class="profile-container bg-white shadow rounded p-4">
+    <div class="text-center mb-4">
+        @if (!string.IsNullOrEmpty(Model.AvatarPath))
+        {
+            <img src="@Url.Content("~/Images/Avatar/" + Model.AvatarPath)" alt="Avatar" class="avatar-image shadow" />
+        }
+        else
+        {
+            <div class="default-avatar shadow">
+                <i class="fas fa-user"></i>
+            </div>
+        }
+        <h5 class="mt-3">@Model.FullName</h5>
+    </div>
+
+    <div class="info-section">
+        <div class="info-item">
+            <strong>Full Name:</strong>
+            <span>@Model.FullName</span>
+        </div>
+        <div class="info-item">
+            <strong>Username:</strong>
+            <span>@Model.Username</span>
+        </div>
+        <div class="info-item">
+            <strong>Email:</strong>
+            <span>@Model.Email</span>
+        </div>
+        <div class="info-item">
+            <strong>Phone Number:</strong>
+            <span>@Model.PhoneNumber</span>
+        </div>
+        <div class="info-item">
+            <strong>Address:</strong>
+            <span>@Model.Address</span>
+        </div>
+    </div>
+</div>
+
+<div class="upload-avatar-section mt-4 bg-light p-4 rounded shadow">
+    <h4 class="mb-3">Upload New Avatar</h4>
+    @using (Html.BeginForm("UploadAvatar", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="input-group">
+            <input type="file" name="avatar" accept="image/*" class="form-control" />
+            <button type="submit" class="btn btn-primary ms-2">Upload</button>
+        </div>
+    }
+</div>
+
+<div class="mt-4 text-center">
+    <a href="@Url.Action("Logout", "User")" class="btn btn-outline-danger mx-2">Logout</a>
+    <a href="@Url.Action("EditProfile", "User")" class="btn btn-outline-secondary mx-2">Edit Profile</a>
+    <button onclick="history.back()" class="btn btn-outline-dark mx-2">Back</button>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .profile-container {
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+    }
+
+    .avatar-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #dee2e6;
+        transition: transform 0.3s ease;
+    }
+
+        .avatar-image:hover {
+            transform: scale(1.1);
+        }
+
+    .default-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-size: 60px;
+    }
+
+    .info-section {
+        margin-top: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #e9ecef;
+        font-size: 16px;
+    }
+
+        .info-item strong {
+            color: #495057;
+        }
+
+    .upload-avatar-section {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .input-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-outline-danger,
+    .btn-outline-secondary,
+    .btn-outline-dark {
+        padding: 10px 20px;
+        font-size: 16px;
+        text-transform: uppercase;
+        border-width: 2px;
+    }
+
+        .btn-outline-danger:hover {
+            color: white;
+            background-color: #dc3545;
+        }
+
+        .btn-outline-secondary:hover {
+            color: white;
+            background-color: #6c757d;
+        }
+
+        .btn-outline-dark:hover {
+            color: white;
+            background-color: #343a40;
+        }
+
+    h4 {
+        color: #495057;
+    }
+</style>
+
+<!-- Ensure Font Awesome is included -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">

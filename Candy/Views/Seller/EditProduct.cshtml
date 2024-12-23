@@ -1,0 +1,203 @@
+﻿@model Candy.Models.Product
+
+<style>
+   
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0; 
+        margin: 0;
+        padding: 0;
+    }
+
+   
+    .form-container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 40px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; 
+    }
+
+        .form-container:hover {
+            transform: scale(1.02);
+        }
+
+    .form-header {
+        font-size: 28px;
+        text-align: center;
+        color: #333333;
+        font-weight: 600;
+        margin-bottom: 25px;
+    }
+
+    
+    .form-group {
+        width: 100%;
+        margin-bottom: 25px;
+    }
+
+        
+        .form-group label {
+            font-size: 16px;
+            color: #333333;
+            font-weight: 500;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+  
+    .form-control {
+        width: 100%;
+        max-width: 400px;
+        height: 45px;
+        padding: 12px;
+        font-size: 16px;
+        color: #333333;
+        background: #fafafa;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
+        margin: 0 auto;
+    }
+
+        .form-control:focus {
+            border-color: #6A5ACD;
+            outline: none;
+        }
+
+        .form-control.textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+ 
+    .image-preview {
+        display: block;
+        max-width: 100%;
+        max-height: 220px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    
+    .additional-images {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 25px;
+    }
+
+        .additional-images img {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+
+   
+    .btn-primary {
+        display: block;
+        width: 100%;
+        max-width: 400px; 
+        padding: 14px 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #6A5ACD;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        margin: 0 auto; 
+    }
+
+        .btn-primary:hover {
+            background-color: #5B4B9A;
+            transform: scale(1.05);
+        }
+
+   
+    .clearfix {
+        clear: both;
+    }
+
+</style>
+
+<div class="form-container">
+    <h2 class="form-header">Chỉnh sửa sản phẩm</h2>
+
+    @using (Html.BeginForm("EditProduct", "Seller", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ProductID)
+
+        <!-- Product Name -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.ProductName, "Tên sản phẩm")
+            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", placeholder = "Nhập tên sản phẩm" })
+        </div>
+
+        <!-- Product Price -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.Price, "Giá sản phẩm")
+            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "Nhập giá sản phẩm", type = "number", step = "0.01" })
+        </div>
+
+        <!-- Product Description -->
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description, "Mô tả sản phẩm")
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control textarea", placeholder = "Nhập mô tả sản phẩm" })
+        </div>
+
+        <!-- Main Image -->
+        <div class="form-group">
+            @Html.Label("Ảnh chính")
+            @if (Model.ProductImages != null && Model.ProductImages.Any(img => img.IsMainImage == true))
+            {
+                var mainImage = Model.ProductImages.First(img => img.IsMainImage == true);
+                <img src="~/Images/@mainImage.ImageURL" alt="Ảnh chính" class="image-preview" />
+            }
+            else
+            {
+                <p>No main image available</p>
+            }
+            <input type="file" name="mainImage" class="form-control" />
+        </div>
+
+        <!-- Additional Images -->
+        <div class="form-group">
+            @Html.Label("Ảnh phụ")
+            @if (Model.ProductImages != null && Model.ProductImages.Any(img => img.IsMainImage == false))
+            {
+                <div class="additional-images">
+                    @foreach (var image in Model.ProductImages.Where(img => img.IsMainImage == false))
+                    {
+                        <img src="~/Images/@image.ImageURL" alt="Ảnh phụ" />
+                    }
+                </div>
+            }
+            else
+            {
+                <p>No additional images available</p>
+            }
+            <input type="file" name="additionalImages" multiple class="form-control" />
+        </div>
+
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-primary">Lưu thay đổi</button>
+    }
+</div>

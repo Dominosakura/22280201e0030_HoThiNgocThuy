@@ -1,0 +1,192 @@
+﻿@model List<Candy.Models.BestSellerProductViewModel>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Admin";
+}
+
+<head>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Add jQuery (if not already included) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- Add Bootstrap JS (requires jQuery for dropdown functionality) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<style>
+    /* Main container styling */
+    .main-container {
+        padding: 20px;
+        background-color: #f7f8fa;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        box-sizing: border-box;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Card box styling */
+    .card-box {
+        background-color: #ffffff;
+        border: 1px solid #e3e6f0;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 30px;
+        transition: box-shadow 0.3s ease;
+        overflow: hidden;
+    }
+
+        .card-box:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    /* Flexbox layout for title and image */
+    .d-flex {
+        display: flex;
+    }
+
+    .align-items-center {
+        align-items: center;
+    }
+
+    .justify-content-between {
+        justify-content: space-between;
+    }
+
+    .book-banner {
+        max-width: 200px;
+        height: auto;
+        margin-left: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .content {
+        flex: 1;
+    }
+
+    /* Product table */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .table tr:hover {
+            background-color: #e9ecef;
+        }
+
+    /* Action button styling */
+    .action-btn {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        color: #333;
+        font-size: 14px;
+        padding: 4px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .action-btn:hover {
+            background-color: #f2f2f2;
+            color: #007bff;
+        }
+
+    /* Primary button styling */
+    .primary-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 14px;
+        text-align: center;
+        transition: background-color 0.3s;
+        cursor: pointer;
+    }
+
+        .primary-btn:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<div class="main-container">
+    <div class="pd-ltr-20">
+        <!-- Card box with title and image -->
+        <div class="card-box mb-30 d-flex align-items-center justify-content-between">
+            <div class="content">
+                <h1 class="h4 pd-20">Best-Selling Products</h1>
+            </div>
+            <div class="image-container">
+                <img src="~/Images/banner-img.png" alt="" class="img-fluid book-banner">
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td class="table-plus">
+                            <img src="@Url.Content("~/Images/" + product.ImageURL)" width="70" height="70" alt="@product.ProductName" class="img-fluid" />
+                        </td>
+                        <td>
+                            <h5 class="font-16">@product.ProductName</h5>
+                        </td>
+                        <td>@product.CategoryName</td>
+                        <td>@String.Format("{0:#,##0} VNĐ", product.Price ?? 0m)</td>
+                        <td>@product.StockQuantity</td>
+                        <td>
+                            <div class="action-btn-group">
+                                <a class="action-btn" href="@Url.Action("Details", "Product", new { id = product.ProductID })">
+                                    <i class="dw dw-eye"></i> View
+                                </a>
+                                <a class="action-btn" href="@Url.Action("Edit", "Product", new { id = product.ProductID })">
+                                    <i class="dw dw-edit2"></i> Edit
+                                </a>
+                                <a class="action-btn" href="@Url.Action("Delete", "Product", new { id = product.ProductID })">
+                                    <i class="dw dw-delete-3"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

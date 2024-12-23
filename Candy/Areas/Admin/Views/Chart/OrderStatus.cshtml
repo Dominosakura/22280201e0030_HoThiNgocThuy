@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Admin";
+    var orderStatus = ViewBag.OrderStatus as List<dynamic>;  // Lấy dữ liệu từ ViewBag
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tình Trạng Đơn Hàng</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Tình Trạng Đơn Hàng</h2>
+    <canvas id="orderStatusChart" width="400" height="200"></canvas>
+
+    <script>
+        // Truyền dữ liệu trực tiếp từ ViewBag vào mảng trong JavaScript
+        var orderStatus = [
+            @foreach (var item in orderStatus)
+            {
+                @: { status: "@item.Status", count: @item.OrderCount },
+            }
+        ];
+
+        // Lấy ngữ cảnh vẽ biểu đồ
+        var ctx = document.getElementById('orderStatusChart').getContext('2d');
+
+        if (orderStatus.length > 0) {
+            // Vẽ biểu đồ
+            var orderStatusChart = new Chart(ctx, {
+                type: 'pie',  // Biểu đồ tròn
+                data: {
+                    labels: orderStatus.map(function(item) { return item.status; }), // Các trạng thái đơn hàng
+                    datasets: [{
+                        label: 'Tình Trạng Đơn Hàng',
+                        data: orderStatus.map(function(item) { return item.count; }), // Số lượng đơn hàng
+                        backgroundColor: ['#FF6347', '#FFD700', '#32CD32', '#A9A9A9'],  // Màu sắc của các phần tử trong biểu đồ
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+    </script>
+</body>
+</html>

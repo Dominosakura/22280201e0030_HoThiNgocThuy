@@ -1,0 +1,77 @@
+﻿@model Candy.Models.Product
+
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="container">
+        <h2 class="text-center text-primary mb-5">Edit Product Information</h2>
+
+        @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="card shadow-lg mx-auto" style="max-width: 800px;">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h4 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Product Details</h4>
+                </div>
+
+                <div class="card-body p-4">
+                    @Html.HiddenFor(model => model.ProductID)
+
+                    <!-- Product Name -->
+                    <div class="form-group mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-tag me-2"></i>Product Name</label>
+                        @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control", placeholder = "Enter product name" })
+                        @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger mt-1" })
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-card-text me-2"></i>Description</label>
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Enter product description", rows = 4 })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger mt-1" })
+                    </div>
+
+                    <!-- Price and Stock -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold"><i class="bi bi-currency-dollar me-2"></i>Price</label>
+                            @Html.TextBoxFor(model => model.Price, new { @class = "form-control", placeholder = "Enter price", type = "number", step = "0.01" })
+                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger mt-1" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold"><i class="bi bi-box-seam me-2"></i>Stock Quantity</label>
+                            @Html.TextBoxFor(model => model.StockQuantity, new { @class = "form-control", placeholder = "Enter stock quantity", type = "number" })
+                            @Html.ValidationMessageFor(model => model.StockQuantity, "", new { @class = "text-danger mt-1" })
+                        </div>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="form-group mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-folder2-open me-2"></i>Category</label>
+                        @Html.DropDownListFor(model => model.CategoryID, new SelectList(ViewBag.Categories, "CategoryID", "CategoryName"), "Select category", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger mt-1" })
+                    </div>
+
+                    <!-- Product Image -->
+                    <div class="form-group mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-image me-2"></i>Product Image</label>
+                        <input type="file" name="fFileUpload" class="form-control" />
+                        @if (Model.ProductImages.Any())
+                        {
+                            <div class="mt-3 text-center">
+                                <img src="~/Images/@Model.ProductImages.First().ImageURL" alt="Current Image" class="img-thumbnail" style="width: 150px; height: 150px;" />
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn btn-primary px-4 py-2 mx-2">
+                            <i class="bi bi-save me-2"></i>Save Changes
+                        </button>
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline-secondary px-4 py-2 mx-2" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

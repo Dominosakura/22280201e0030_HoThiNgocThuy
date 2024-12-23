@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "EditProfile";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+@model Candy.Models.User
+
+<div class="container mt-5">
+    <div class="text-center">
+        <!-- Profile Image -->
+        <img src="~/Images/Logo-removebg-preview.png" alt="User Avatar" class="rounded-circle mb-4 shadow-sm" style="width: 120px; height: 120px;">
+        <h2 class="text-primary mb-4">Chỉnh sửa thông tin cá nhân</h2>
+    </div>
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @ViewBag.Message
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @using (Html.BeginForm("EditProfile", "User", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.UserID)
+
+        <div class="form-group mb-4">
+            @Html.LabelFor(model => model.FullName, "Họ và tên", new { @class = "font-weight-bold text-secondary" })
+            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control shadow-sm", placeholder = "Nhập họ và tên" })
+        </div>
+
+        <div class="form-group mb-4">
+            @Html.LabelFor(model => model.Email, "Email", new { @class = "font-weight-bold text-secondary" })
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control shadow-sm", placeholder = "Nhập email" })
+        </div>
+
+        <div class="form-group mb-4">
+            @Html.LabelFor(model => model.PhoneNumber, "Số điện thoại", new { @class = "font-weight-bold text-secondary" })
+            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control shadow-sm", placeholder = "Nhập số điện thoại" })
+        </div>
+
+        <div class="form-group mb-4">
+            @Html.LabelFor(model => model.Address, "Địa chỉ", new { @class = "font-weight-bold text-secondary" })
+            @Html.TextBoxFor(model => model.Address, new { @class = "form-control shadow-sm", placeholder = "Nhập địa chỉ" })
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <button type="submit" class="btn btn-primary px-4 py-2">Lưu thay đổi</button>
+            <a href="@Url.Action("Profile", "User")" class="btn btn-outline-secondary px-4 py-2">Hủy</a>
+        </div>
+    }
+</div>
+
+<!-- Optional custom styles -->
+<style>
+    body {
+        background-color: #f9f9fb;
+    }
+
+    .container {
+        max-width: 500px;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group label {
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .form-control {
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+        .form-control:focus {
+            border-color: #6f42c1;
+            box-shadow: 0 0 5px rgba(111, 66, 193, 0.3);
+        }
+
+    .btn {
+        border-radius: 25px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .btn-primary {
+        background-color: #6f42c1;
+        border-color: #6f42c1;
+    }
+
+        .btn-primary:hover {
+            background-color: #5a2e8e;
+            border-color: #5a2e8e;
+        }
+
+    .btn-outline-secondary {
+        color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+    .text-primary {
+        color: #6f42c1 !important;
+    }
+
+    .rounded-circle {
+        border: 3px solid #6f42c1;
+    }
+
+    .alert {
+        font-size: 14px;
+    }
+</style>

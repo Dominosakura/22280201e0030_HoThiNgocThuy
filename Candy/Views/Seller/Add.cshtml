@@ -1,0 +1,31 @@
+﻿
+@model IEnumerable<Candy.Models.Product> 
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên sản phẩm</th>
+            <th>Số lượng hiện tại</th>
+            <th>Bổ sung</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.ProductID</td>
+                <td>@product.ProductName</td>
+                <td>@product.StockQuantity</td>
+                <td>
+                  
+                    <form asp-action="Add" asp-controller="Product" method="post">
+                        <input type="hidden" name="ProductID" value="@product.ProductID" />
+                        <input type="number" name="StockQuantity" placeholder="Số lượng" required min="1" />
+                        <button type="submit">Add</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

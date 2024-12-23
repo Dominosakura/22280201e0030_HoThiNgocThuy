@@ -1,0 +1,288 @@
+﻿@using Candy.Models
+@using PagedList.Mvc
+@model PagedList.PagedList<Candy.Models.Order>
+
+@{
+    ViewBag.Title = "Order List";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2 class="text-center"
+    style="background: linear-gradient(to right, #0d47a1, #1976d2); -webkit-background-clip: text; color: transparent;">
+    ORDER MANAGEMENT
+</h2>
+<div style="height:20px"></div>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger text-center">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+<style>
+    /* General Layout */
+    .order-list-container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-container {
+        margin-top: 20px;
+        overflow-x: auto; /* Ensure responsiveness on smaller screens */
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            text-align: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 1.1rem;
+        }
+
+        .table th {
+            background: #0d47a1;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    /* Action Buttons */
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        margin: 2px;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .btn-success {
+        background-color: #4CAF50;
+    }
+
+        .btn-success:hover {
+            background-color: #388E3C;
+        }
+
+    .btn-primary {
+        background-color: #2196F3;
+    }
+
+        .btn-primary:hover {
+            background-color: #1976D2;
+        }
+
+    .btn-warning {
+        background-color: #FFC107;
+    }
+
+        .btn-warning:hover {
+            background-color: #FF9800;
+        }
+
+    .btn-info {
+        background-color: #17a2b8;
+    }
+
+        .btn-info:hover {
+            background-color: #138496;
+        }
+
+    .btn-danger {
+        background-color: #f44336;
+    }
+
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+    /* Pagination */
+    .MenuTrang {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 1.1rem;
+    }
+
+        .MenuTrang a {
+            color: #0d47a1;
+            padding: 5px 10px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 0 2px;
+        }
+
+            .MenuTrang a:hover {
+                background-color: #0d47a1;
+                color: #fff;
+            }
+
+        .MenuTrang .active {
+            background-color: #0d47a1;
+            color: #fff;
+        }
+</style>
+
+<div class="order-list-container">
+    <!-- Statistics Cards -->
+    <div class="row">
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card-box">
+                <div class="inner-circle">
+                    <h4>@ViewBag.TotalFavoritesBySeller</h4>
+                </div>
+                <p class="card-title">FAVORITES</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card-box">
+                <div class="inner-circle">
+                    <h4>@ViewBag.TotalProduct</h4>
+                </div>
+                <p class="card-title">PRODUCTS</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card-box">
+                <div class="inner-circle">
+                    <h4>@ViewBag.TotalOrders</h4>
+                </div>
+                <p class="card-title">ORDERS</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Table -->
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Total Amount</th>
+                    <th>Shipping Address</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.OrderID</td>
+                        <td>@order.OrderDate.ToString("dd-MM-yyyy")</td>
+                        <td>@string.Format("{0:N0} VNĐ", order.TotalAmount)</td>
+
+                        <td>@order.ShippingAddress</td>
+                        <td>@order.Status</td>
+                        <td>
+                            @if (order.Status == "Pending Confirmation")
+                            {
+                                @Html.ActionLink("Approve", "UpdateOrderStatus", new { orderId = order.OrderID, newStatus = "Awaiting Pickup" }, new { @class = "btn btn-success" })
+                            }
+                            @if (order.Status == "Awaiting Pickup")
+                            {
+                                @Html.ActionLink("Pick Up", "UpdateOrderStatus", new { orderId = order.OrderID, newStatus = "Awaiting Delivery" }, new { @class = "btn btn-primary" })
+                            }
+                            @if (order.Status == "Awaiting Delivery")
+                            {
+                                @Html.ActionLink("Deliver", "UpdateOrderStatus", new { orderId = order.OrderID, newStatus = "Delivered" }, new { @class = "btn btn-warning" })
+                            }
+                            @if (order.Status == "Delivered")
+                            {
+                                @Html.ActionLink("Review", "UpdateOrderStatus", new { orderId = order.OrderID, newStatus = "Reviewed" }, new { @class = "btn btn-info" })
+                            }
+                            @if (order.Status != "Cancelled")
+                            {
+                                @Html.ActionLink("Cancel", "UpdateOrderStatus", new { orderId = order.OrderID, newStatus = "Cancelled" }, new { @class = "btn btn-danger" })
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("OrderList", new { page = page }))
+    </div>
+</div>
+
+<style>
+    .row {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap; 
+    }
+
+    .col-md-4, .col-sm-6 {
+        flex: 1;
+        min-width: 250px; 
+        max-width: 30%;
+        margin: 10px;
+    }
+
+    .card-box {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+    .inner-circle {
+        width: 90px;
+        height: 90px;
+        margin: 0 auto;
+        background-color: #0d47a1;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-size: 1.5rem;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-title {
+        margin-top: 15px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* Responsive design adjustments */
+    .inner-circle {
+        width: 70px;
+        height: 70px;
+        font-size: 1.2rem;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+</style>

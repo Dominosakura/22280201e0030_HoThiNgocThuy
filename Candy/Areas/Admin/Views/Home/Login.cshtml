@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    @Styles.Render("~/Content/Admin/Login.css")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="logo">
+            <img src="~/Images/Logo.png" alt="Twitter Logo">
+        </div>
+        <div class="text-center mt-4 name">
+            Candy
+        </div>
+        <form class="p-3 mt-3" method="post" action="/Admin/Home/Login">
+            @Html.AntiForgeryToken()
+            <div class="form-field d-flex align-items-center">
+                <span class="far fa-user"></span>
+                <input type="text" name="Username" id="userName" placeholder="Username" required>
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <span class="fas fa-key"></span>
+                <input type="password" name="Password" id="pwd" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn mt-3">Login</button>
+        </form>
+        <div class="text-center fs-6">
+            <a href="@Url.Action("DangKy", "Home", new { area = "Admin" })">Sign up</a>
+
+            <p style="font-style:italic; color:#b57cd0;">@ViewBag.ThongBao</p>
+        </div>
+    </div>
+</body>
+</html>

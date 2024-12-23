@@ -1,0 +1,108 @@
+﻿@using Candy.Models
+@using PagedList.Mvc
+@using System.Text.RegularExpressions
+@model PagedList.PagedList<Candy.Models.ProductCategory>
+
+@functions{
+    public IHtmlString Truncate(string input, int length)
+    {
+        if (string.IsNullOrEmpty(input) || input.Length <= length)
+        {
+            return new HtmlString(input);
+        }
+        return new HtmlString(input.Substring(0, length) + "...");
+    }
+
+    public string HtmlDecode(string input)
+    {
+        return System.Web.HttpUtility.HtmlDecode(input);
+    }
+
+    public string StripHtml(string input)
+    {
+        return Regex.Replace(input, "<.*?>", String.Empty);
+    }
+}
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Admin";
+}
+
+<style>
+    body {
+        font-size: 1.2em;
+    }
+</style>
+<div class="container">
+    <h2 class="text-center my-4 font-weight-bold text-primary">CATEGORY MANAGEMENT</h2>
+
+    <p class="text-right mb-3">
+        <button class="btn btn-success btn-lg" onclick="window.location.href='@Url.Action("Create")'">ADD CATEGORY</button>
+    </p>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Category Name</th>
+                    <th>Description</th>
+                    <th class="text-center">Image</th>
+                    <th>Creation Date</th>
+                    <th>Created By</th>
+                    <th>Update Date</th>
+                    <th>Updated By</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.CategoryID)</td>
+                        <td>@Truncate(item.CategoryName, 50)</td>
+                        <td>@Html.Raw(Truncate(HtmlDecode(item.Description), 70))</td>
+                        <td class="text-center" style="width: 80px;">
+                            @if (!string.IsNullOrEmpty(item.ImageURL))
+                            {
+                                <img src="~/Images/@item.ImageURL" class="img-fluid rounded" style="height:40px; width:40px" alt="Product Image" />
+                            }
+                            else
+                            {
+                                <span class="text-muted">No Image</span>
+                            }
+                        </td>
+                        <td>@item.CreatedDate</td>
+                        <td>@item.CreatedBy </td>
+                        <td>@item.UpdatedDate</td>
+                        <td>@item.UpdatedBy</td>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center">
+                                <a href="@Url.Action("Edit", "Categories",new { id = item.CategoryID })" class="btn btn-warning btn-sm mx-1">
+                                    Edit
+                                </a>
+                                <a href="@Url.Action("Details", "Categories",new { id = item.CategoryID })" class="btn btn-info btn-sm mx-1">
+                                    Details
+                                </a>
+                                <a href="@Url.Action("Delete", "Categories",new { id = item.CategoryID })" class="btn btn-danger btn-sm mx-1">
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <p class="text-center">
+        Trang @Model.PageNumber / @Model.PageCount
+    </p>
+
+    <div class="d-flex justify-content-center">
+        @Html.PagedListPager(Model, page => Url.Action("CategoriesList", new { page = page }), PagedListRenderOptions.Classic)
+    </div>
+</div>

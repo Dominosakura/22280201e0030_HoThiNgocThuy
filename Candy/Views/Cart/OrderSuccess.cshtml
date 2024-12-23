@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Order Placed Successfully";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<div class="order-success-container">
+    <div class="success-message">
+        <i class="fas fa-check-circle"></i>
+        <h2>@Model</h2>
+        <p>Thank you for shopping with us. We will process your order shortly.</p>
+        <a href="@Url.Action("Index", "Product")" class="btn btn-primary">Return to Homepage</a>
+    </div>
+</div>
+
+<!-- CSS Styles -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f7f9fc;
+    }
+
+    .order-success-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        padding: 20px;
+        background-color: #f7f9fc;
+    }
+
+    .success-message {
+        text-align: center;
+        background-color: #ffffff;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+    }
+
+        .success-message i {
+            font-size: 4rem;
+            color: #28a745; 
+            margin-bottom: 20px;
+        }
+
+        .success-message h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #343a40; 
+            margin-bottom: 10px;
+        }
+
+        .success-message p {
+            font-size: 1rem;
+            color: #6c757d; 
+            margin-bottom: 20px;
+        }
+
+    .btn-primary {
+        display: inline-block;
+        background-color: #6a4c9c;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-size: 1rem;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #5b3d87;
+            transform: translateY(-2px);
+        }
+</style>
+
+<!-- Add FontAwesome for icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">

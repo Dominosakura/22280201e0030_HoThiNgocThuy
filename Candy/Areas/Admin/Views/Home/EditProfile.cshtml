@@ -1,0 +1,131 @@
+﻿@model Candy.Models.UserAdmin
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <!-- Profile Image -->
+        <img src="~/Images/Logo-removebg-preview.png" alt="User Avatar" class="rounded-circle mb-4 shadow-sm" style="width: 120px; height: 120px;">
+        <h2 class="text-primary mb-4">Edit Profile Information</h2>
+    </div>
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @ViewBag.Message
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @using (Html.BeginForm("EditProfile", "Home", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.IDAdmin)
+
+        <!-- Full Name Field -->
+        <div class="form-group mb-4">
+            @Html.LabelFor(model => model.FullName, "Full Name", new { @class = "font-weight-bold text-secondary" })
+            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control shadow-sm", placeholder = "Enter full name" })
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group mb-4">
+            @Html.LabelFor(model => model.Email, "Email", new { @class = "font-weight-bold text-secondary" })
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control shadow-sm", placeholder = "Enter email" })
+        </div>
+
+        <!-- Phone Field -->
+        <div class="form-group mb-4">
+            @Html.LabelFor(model => model.Phone, "Phone Number", new { @class = "font-weight-bold text-secondary" })
+            @Html.TextBoxFor(model => model.Phone, new { @class = "form-control shadow-sm", placeholder = "Enter phone number" })
+        </div>
+
+        <!-- Buttons Section -->
+        <div class="d-flex justify-content-center align-items-center mt-4">
+            <button type="submit" class="btn btn-primary px-4 py-2 mx-2">Save Changes</button>
+            <a href="@Url.Action("Profile", "Home")" class="btn btn-outline-secondary px-4 py-2 mx-2">Cancel</a>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-outline-dark px-4 py-2 mx-2">Back</a>
+        </div>
+    }
+</div>
+
+<!-- Optional custom styles -->
+<style>
+    body {
+        background-color: #f9f9fb;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+        max-width: 600px;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group label {
+        font-weight: bold;
+        color: #495057; /* Secondary text color */
+    }
+
+    .form-control {
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #6f42c1;
+            box-shadow: 0 0 5px rgba(111, 66, 193, 0.3);
+        }
+
+    .btn {
+        border-radius: 25px;
+        font-weight: bold;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #6f42c1;
+        border-color: #6f42c1;
+    }
+
+        .btn-primary:hover {
+            background-color: #5a2e8e;
+            border-color: #5a2e8e;
+        }
+
+    .btn-outline-secondary {
+        color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+    .btn-outline-dark {
+        color: #343a40;
+        border-color: #343a40;
+    }
+
+        .btn-outline-dark:hover {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+    .text-primary {
+        color: #6f42c1 !important;
+    }
+
+    .rounded-circle {
+        border: 3px solid #6f42c1;
+    }
+
+    .alert {
+        font-size: 14px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+</style>

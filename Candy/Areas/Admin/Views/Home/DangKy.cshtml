@@ -1,0 +1,136 @@
+﻿
+
+<h2 class="text-center mt-4 text-uppercase font-weight-bold" style="color: #34495e;">Admin Registration</h2>
+
+<head>
+    <link rel="stylesheet" href="~/Content/Demo.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <img src="~/Images/Logo.png" alt="Logo" class="img-fluid" style="max-width: 150px;" />
+    </div>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <h4 class="text-danger text-center">@ViewBag.Message</h4>
+    }
+
+    @using (Html.BeginForm("DangKy", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="FullName">Họ & Tên:</label>
+                    @Html.TextBox("FullName", null, new { @class = "form-control", placeholder = "Nhập họ & tên" })
+                    @ViewData["errFullName"]
+                </div>
+
+                <div class="form-group">
+                    <label for="Username">Tài Khoản:</label>
+                    @Html.TextBox("Username", null, new { @class = "form-control", placeholder = "Nhập tài khoản" })
+                    @ViewData["errUsername"]
+                </div>
+
+                <div class="form-group">
+                    <label for="Password">Mật Khẩu:</label>
+                    <div class="input-group">
+                        @Html.Password("Password", new { @class = "form-control", placeholder = "Nhập mật khẩu" })
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('Password')">Hiện</button>
+                        </div>
+                    </div>
+                    @ViewData["errPassword"]
+                </div>
+
+                <div class="form-group">
+                    <label for="PasswordConfirm">Nhập Lại Mật Khẩu:</label>
+                    <div class="input-group">
+                        @Html.Password("PasswordConfirm", new { @class = "form-control", placeholder = "Nhập lại mật khẩu" })
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('PasswordConfirm')">Hiện</button>
+                        </div>
+                    </div>
+                    @ViewData["errPasswordConfirm"]
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Email">Email:</label>
+                    @Html.TextBox("Email", null, new { @class = "form-control", placeholder = "Nhập email" })
+                    @ViewData["errEmail"]
+                </div>
+
+                <div class="form-group">
+                    <label for="PhoneNumber">Điện Thoại:</label>
+                    @Html.TextBox("PhoneNumber", null, new { @class = "form-control", placeholder = "Nhập số điện thoại" })
+                    @ViewData["errPhoneNumber"]
+                </div>
+
+              
+                <div class="form-group mt-4">
+                    <input type="submit" value="Đăng Ký" class="btn btn-success btn-block" />
+                    <input type="reset" value="Xóa" class="btn btn-outline-secondary btn-block" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        background-color: #f4f6f9;
+    }
+
+    .container {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        font-family: 'Arial', sans-serif;
+        letter-spacing: 1px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #34495e;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+    .btn-outline-secondary {
+        transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .btn-outline-secondary:hover {
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #6c757d;
+            transform: translateY(-2px);
+        }
+</style>
+
+<script>
+    function togglePassword(id) {
+        var input = document.getElementById(id);
+        input.type = input.type === "password" ? "text" : "password";
+    }
+</script>

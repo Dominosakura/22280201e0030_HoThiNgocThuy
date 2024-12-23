@@ -1,0 +1,132 @@
+﻿@model List<Candy.Models.ShoppingCartItem>
+
+@{
+    ViewBag.Title = "Shopping Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+<div class="container my-5">
+    <h2 class="text-center text-purple my-4">Your Shopping Cart</h2>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="table-responsive shadow rounded bg-light p-3">
+            <table class="table align-middle">
+                <thead class="bg-purple-light text-white">
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Image</th>
+                        <th>Product Name</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-end">Price</th>
+                        <th class="text-end">Total</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var item = Model[i];
+                        <tr>
+                            <td class="text-center">@((i + 1).ToString())</td>
+                            <td class="text-center">
+                                <img src="~/Images/@item.ProductImage.ImageURL" class="img-thumbnail rounded shadow-sm" style="width: 80px;" alt="Product Image" />
+                            </td>
+                            <td>@item.Product.ProductName</td>
+                            <td class="text-center">
+                                @using (Html.BeginForm("CapNhatGioHang", "Cart", FormMethod.Post))
+                                {
+                                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                        @Html.Hidden("productID", item.ProductID)
+                                        @Html.TextBox("quantity", item.Quantity, new { @class = "form-control text-center", @type = "number", @min = "1", style = "width: 80px;" })
+                                        <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+                                    </div>
+                                }
+                            </td>
+                            <td class="text-end">@String.Format("{0:N0} VND", item.Product.Price)</td>
+                            <td class="text-end">@String.Format("{0:N0} VND", item.Quantity * item.Product.Price)</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    @Html.ActionLink("Remove", "XoaSPKhoiGioHang", "Cart", new { productID = item.ProductID }, new { @class = "btn btn-sm btn-outline-danger ms-2" })
+                                </div>
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row mt-4 align-items-center">
+            <div class="col-md-6 text-md-start text-center mb-3 mb-md-0">
+                <h5 class="text-purple"><strong>Total Quantity:</strong> <span class="text-dark">@ViewBag.TongSoLuong</span></h5>
+                <h5 class="text-purple"><strong>Total Price:</strong> <span class="text-dark">@ViewBag.TongTien.ToString("#,0") VND</span></h5>
+            </div>
+            <div class="col-md-6 text-md-end text-center">
+                <a href="@Url.Action("Order", "Cart")" class="btn btn-purple btn-lg me-2">Place Order</a>
+                <a href="@Url.Action("XoaGioHang", "Cart")" class="btn btn-danger btn-lg">Clear Cart</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center my-4">
+            Your cart is empty. <a href="@Url.Action("Index", "Product")" class="alert-link">Shop Now!</a>
+        </div>
+    }
+
+    <div class="mt-4">
+        <a href="@Url.Action("Index", "Product")" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back to Products</a>
+    </div>
+</div>
+
+<style>
+    /* Theme Colors */
+    .text-purple {
+        color: #6A1B9A;
+    }
+
+    .bg-purple-light {
+        background-color: #9C27B0;
+    }
+
+    .btn-purple {
+        background-color: #6A1B9A;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-purple:hover {
+            background-color: #5A2280;
+        }
+
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .table {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .alert-link {
+        color: #6A1B9A;
+        font-weight: bold;
+    }
+
+        .alert-link:hover {
+            text-decoration: underline;
+        }
+</style>

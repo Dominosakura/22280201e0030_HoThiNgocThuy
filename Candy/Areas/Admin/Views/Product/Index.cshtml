@@ -1,0 +1,220 @@
+﻿@using Candy.Models
+@using PagedList.Mvc
+@using System.Text.RegularExpressions
+@model PagedList.PagedList<Candy.Models.Product>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Admin";
+}
+
+@functions{
+    public IHtmlString Truncate(string input, int length)
+    {
+        if (string.IsNullOrEmpty(input) || input.Length <= length)
+        {
+            return new HtmlString(input);
+        }
+        return new HtmlString(input.Substring(0, length) + "...");
+    }
+
+    public string HtmlDecode(string input)
+    {
+        return System.Web.HttpUtility.HtmlDecode(input);
+    }
+
+    public string StripHtml(string input)
+    {
+        return Regex.Replace(input, "<.*?>", String.Empty);
+    }
+}
+
+<style>
+    body {
+        font-size: 1.2em;
+    }
+</style>
+<h2 class="product-title">PRODUCT MANAGEMENT</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th style="text-align:center;">Product Name</th>
+                    <th style="text-align:center;">Image</th>
+                    <th style="text-align:center;">Description</th>
+                    <th style="text-align:center;">Price</th>
+                    <th style="text-align:center;">Stock Quantity</th>
+                    <th style="text-align:center;">Creation Date</th>
+                    <th style="text-align:center;">Status</th>
+                    <th style="text-align:center;">Actions</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
+                        <td>@Truncate(item.ProductName, 50)</td>
+                        <td style="text-align:center;">
+                            @if (item.ProductImages != null && item.ProductImages.Any())
+                            {
+                                <img src="@Url.Content("~/Images/" + item.ProductImages.First().ImageURL)" alt="Product Image" class="product-image" style="width: 50px; height: 50px;" />
+                            }
+                            else
+                            {
+                                <span>No Image</span>
+                            }
+                        </td>
+                        <td>@Html.Raw(Truncate(HtmlDecode(item.Description), 70))</td>
+                        <td>@Html.DisplayFor(modelItem => item.Price) VNĐ</td>
+                        <td>@Html.DisplayFor(modelItem => item.StockQuantity)</td>
+                        <td>@String.Format("{0:dd/MM/yyyy}", item.CreatedDate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                        <td class="action-buttons" style="white-space: nowrap; text-align: center;">
+                            <div class="btn-group">
+                                @using (Html.BeginForm("Edit", "Product", new { id = item.ProductID }, FormMethod.Get))
+                                {
+                                    <button type="submit" class="btn btn-primary btn-sm" style="margin-right: 5px;">Edit</button>
+                                }
+                                @using (Html.BeginForm("Details", "Product", new { id = item.ProductID }, FormMethod.Get))
+                                {
+                                    <button type="submit" class="btn btn-info btn-sm" style="margin-right: 5px;">Details</button>
+                                }
+                                @using (Html.BeginForm("Delete", "Product", new { id = item.ProductID }, FormMethod.Post))
+                                {
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')" style="margin-right: 5px;">Delete</button>
+                                }
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <p class="pagination-info">
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    </p>
+
+    <div class="pagination-container">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+    </div>
+
+    <style>
+        /* Chỉnh sửa kiểu cho tiêu đề */
+        .product-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+            padding: 10px;
+            border-bottom: 3px solid #007bff;
+        }
+
+        .btn-group button {
+            margin-right: 5px;
+        }
+
+
+        /* Table responsive */
+        .table-responsive {
+            max-width: 100%;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Định dạng bảng */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+            background-color: #fff;
+        }
+
+            .table th, .table td {
+                padding: 12px 15px;
+                text-align: left;
+                border: 1px solid #ddd;
+            }
+
+            .table th {
+                background-color: #f8f9fa;
+                font-weight: bold;
+                color: #333;
+            }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f9f9f9;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .table-bordered {
+            border: 1px solid #ddd;
+        }
+
+        /* Hình ảnh sản phẩm */
+        .product-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Định dạng các liên kết hành động */
+        .action-links {
+            text-align: center;
+            font-size: 14px;
+            white-space: nowrap; /* Đảm bảo các liên kết hành động không xuống dòng */
+        }
+
+            .action-links a {
+                color: #007bff;
+                text-decoration: none;
+                margin-right: 10px;
+                font-weight: 600;
+            }
+
+                .action-links a:hover {
+                    text-decoration: underline;
+                    color: #0056b3;
+                }
+
+        /* Phân trang */
+        .pagination-info {
+            text-align: center;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        .pagination-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagedlist-pager {
+            display: inline-block;
+            margin: 5px 10px;
+        }
+
+            .pagedlist-pager a {
+                color: #007bff;
+                font-size: 1rem;
+                padding: 8px 15px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                margin: 0 5px;
+            }
+
+                .pagedlist-pager a:hover {
+                    background-color: #007bff;
+                    color: white;
+                }
+    </style>

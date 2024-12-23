@@ -1,0 +1,98 @@
+﻿@model Candy.Models.ProductCategory
+
+@{
+    ViewBag.Title = "Chi Tiết Danh Mục";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style>
+    .category-details {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+
+    h2 {
+        text-align: center;
+        color: #4a4a4a;
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+
+    .dl-horizontal dt {
+        font-weight: bold;
+        color: #333;
+        margin-top: 15px;
+    }
+
+    .dl-horizontal dd {
+        margin-bottom: 15px;
+        padding-left: 20px;
+        color: #555;
+    }
+
+    img {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto 20px;
+        border-radius: 8px;
+    }
+
+    .action-links {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .action-links a {
+            color: #fff;
+            padding: 8px 16px;
+            margin: 0 5px;
+            background-color: #007bff;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+            .action-links a:hover {
+                background-color: #0056b3;
+            }
+</style>
+
+<div class="category-details">
+    <h2>Chi Tiết Danh Mục</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Tên Danh Mục</dt>
+        <dd>@Html.DisplayFor(model => model.CategoryName)</dd>
+
+        <dt>Mô Tả</dt>
+        <dd>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;@Html.Raw(Model.Description?.Replace("\n", "<br>&nbsp;&nbsp;&nbsp;&nbsp;") ?? "Không có mô tả")</p>
+        </dd>
+
+        <dt>Ảnh Danh Mục</dt>
+        <dd>
+            <img src="~/Images/@Model.ImageURL" alt="@Model.CategoryName" />
+        </dd>
+
+        <dt>Người Tạo</dt>
+        <dd>@Html.DisplayFor(model => model.CreatedBy)</dd>
+
+        <dt>Người Cập Nhật</dt>
+        <dd>@Html.DisplayFor(model => model.UpdatedBy)</dd>
+
+        <dt>Ngày Tạo</dt>
+        <dd>@Html.DisplayFor(model => model.CreatedDate)</dd>
+
+        <dt>Ngày Cập Nhật</dt>
+        <dd>@Html.DisplayFor(model => model.UpdatedDate)</dd>
+    </dl>
+
+    <div class="action-links">
+        @Html.ActionLink("Sửa", "Edit", new { id = Model.CategoryID }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Trở Về Danh Sách", "CategoriesList", null, new { @class = "btn btn-secondary" })
+    </div>
+</div>

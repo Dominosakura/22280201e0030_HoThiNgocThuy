@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Candy.Models.ProductImage>
+
+@{
+    ViewBag.Title = "Favorites List";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/Content/CSS.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">YOUR FAVORITE PRODUCTS</h2>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6 g-4">
+        @foreach (var product in Model)
+        {
+            <div class="col">
+                <div class="card shadow-sm border-light">
+                    <img src="~/Images/@product.ImageURL" alt="@product.Product.ProductName" class="card-img-top" style="height: 150px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">
+                            <a href="@Url.Action("Details", "Product", new { id = product.ProductID })" class="no-underline-black">@product.Product.ProductName</a>
+                        </h5>
+                        <p class="card-text text-muted">@String.Format("{0:N0} VNĐ", product.Product.Price)</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-shopping-cart" aria-hidden="true"></i> Cart
+                            </a>
+                            <a href="@Url.Action("RemoveFromFavorites", "Buyer", new { productID = product.ProductID })" class="btn btn-outline-danger" title="Remove from favorites">
+                                <i class="fas fa-trash" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="@Url.Action("Index", "PageHome")" class="btn btn-secondary">Back to Home</a>
+    </div>
+</div>
+
+
+<style>
+    .no-underline-black {
+        text-decoration: none;
+        color: black;
+    }
+
+        .no-underline-black:hover {
+            color: #555;
+        }
+
+    .card {
+        transition: transform 0.2s ease-in-out;
+    }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+    .card-title {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .card-body .card-text {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .btn-primary {
+        background-color: #6f42c1;
+        border-color: #6f42c1;
+        font-weight: bold;
+    }
+
+        .btn-primary:hover {
+            background-color: #5a2e8e;
+            border-color: #5a2e8e;
+        }
+
+    .btn-outline-danger {
+        border-color: #e74a3b;
+        color: #e74a3b;
+    }
+
+        .btn-outline-danger:hover {
+            background-color: #e74a3b;
+            color: white;
+        }
+</style>

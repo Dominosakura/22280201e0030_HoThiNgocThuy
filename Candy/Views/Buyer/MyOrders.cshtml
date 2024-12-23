@@ -1,0 +1,185 @@
+﻿@{
+    ViewBag.Title = "MyOrders";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<style>
+    .card-box {
+        height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between; 
+    }
+
+    .col-xl-3, .col-md-6 {
+        flex: 0 0 32%;
+        max-width: 32%;
+    }
+
+    .card-box {
+        background-color: #ffffff;
+        border: 1px solid #e3e6f0;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 30px;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 150px; 
+    }
+
+        .card-box:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+        }
+
+    .card-customer {
+        background: linear-gradient(to right, #0d47a1, #1976d2);
+        color: #ffffff;
+    }
+
+    .card-status {
+        background: linear-gradient(to right, #ff9800, #f57c00); 
+        color: #ffffff;
+    }
+
+    .card-books {
+        background-color: #81c784; 
+        color: #ffffff;
+    }
+
+    .card-orders {
+        background: linear-gradient(to right, #0d47a1, #66bb6a);
+        color: #ffffff;
+    }
+
+    .card-deli {
+        background: linear-gradient(to right, #0d47a1, #66bb6a);
+        color: #ffffff;
+    }
+
+    .card-delete {
+        background: linear-gradient(to right, #0d47a1, #66bb6a);
+        color: #ffffff;
+    }
+
+    .card-review {
+        background: linear-gradient(to right, #0d47a1, #66bb6a);
+        color: #ffffff;
+    }
+
+    .widget-style1 {
+        font-size: 16px;
+    }
+
+    .widget-data .h4 {
+        margin-bottom: 10px; 
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .widget-data .weight-600 {
+        font-weight: 600;
+        font-size: 14px;
+        color: #ecf0f1;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -15px;
+        justify-content: space-between;
+    }
+
+    .col-xl-3, .col-md-6 {
+        padding: 15px;
+        flex: 0 0 31%; 
+        max-width: 31%;
+    }
+
+    .mb-30 {
+        margin-bottom: 30px;
+    }
+
+    .height-100-p {
+        height: 100%;
+    }
+</style>
+
+
+<h2 class="text-center my-4">MY ORDER</h2>
+
+<!-- Statistics Cards -->
+<div class="row">
+    <!-- Nhóm thẻ trên -->
+    <div class="col-xl-3 col-md-6 mb-30">
+        <div class="card-box height-100-p widget-style1 card-customer">
+            <div class="widget-data">
+                <div class="h4 mb-0">@ViewBag.PendingConfirmationCount</div>
+                <div class="weight-600 font-14">Chờ Xác Nhận</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-30">
+        <div class="card-box height-100-p widget-style1 card-books">
+            <div class="widget-data">
+                <div class="h4 mb-0">@ViewBag.AwaitingPickupCount</div>
+                <div class="weight-600 font-14">Chờ Nhận Hàng</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-30">
+        <div class="card-box height-100-p widget-style1 card-orders">
+            <div class="widget-data">
+                <div class="h4 mb-0">@ViewBag.AwaitingDeliveryCount</div>
+                <div class="weight-600 font-14">Chờ Giao Hàng</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Nhóm thẻ dưới -->
+    <div class="col-xl-3 col-md-6 mb-30">
+        <div class="card-box height-100-p widget-style1 card-deli">
+            <div class="widget-data">
+                <div class="h4 mb-0">@ViewBag.DeliveredCount</div>
+                <div class="weight-600 font-14">Đã Giao</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-30">
+        <div class="card-box height-100-p widget-style1 card-review">
+            <div class="widget-data">
+                <div class="h4 mb-0">@ViewBag.ReviewedCount</div>
+                <div class="weight-600 font-14">Đánh giá</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-30">
+        <div class="card-box height-100-p widget-style1 card-delete">
+            <div class="widget-data">
+                <div class="h4 mb-0">@ViewBag.CancelledCount </div>
+                <div class="weight-600 font-14">Đã Hủy</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Home", "Index", "PageHome", null, new { @class = "btn btn-secondary mt-3" })
+</div>

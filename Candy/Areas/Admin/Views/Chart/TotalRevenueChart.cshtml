@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Tổng Doanh Thu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-primary text-center">BIỂU ĐỒ TỔNG DOANH THU</h2>
+    <div class="card shadow mt-4">
+        <div class="card-body">
+            <canvas id="revenueChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Dữ liệu từ ViewBag
+    const revenueData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.RevenueByMonth));
+
+    // Lấy labels (tháng) và data (doanh thu) từ dữ liệu
+    const labels = revenueData.map(item => item.Month);
+    const data = revenueData.map(item => item.TotalRevenue);
+
+    // Cấu hình biểu đồ
+    const ctx = document.getElementById('revenueChart').getContext('2d');
+    const revenueChart = new Chart(ctx, {
+        type: 'bar', // Loại biểu đồ (bar, line, pie, ...)
+        data: {
+            labels: labels, // Tháng
+            datasets: [{
+                label: 'Doanh thu (VNĐ)',
+                data: data, // Dữ liệu doanh thu
+                backgroundColor: 'rgba(75, 192, 192, 0.6)', // Màu cột
+                borderColor: 'rgba(75, 192, 192, 1)', // Màu viền
+                borderWidth: 1 // Độ dày viền
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true // Bắt đầu từ 0
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            }
+        }
+    });
+</script>

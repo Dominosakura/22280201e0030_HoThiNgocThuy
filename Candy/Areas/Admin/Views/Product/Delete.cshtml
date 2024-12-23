@@ -1,0 +1,174 @@
+﻿@model Candy.Models.Product
+
+<style type="text/css">
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+    }
+
+    .product-delete-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    h2 {
+        color: #e74c3c;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    h3 {
+        color: #d35400;
+        margin-bottom: 20px;
+    }
+
+    .product-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        align-items: start;
+    }
+
+    .product-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-image span {
+        font-style: italic;
+        color: #999;
+    }
+
+    .product-details-content {
+        text-align: left;
+        background-color: #ffffff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .dl-horizontal dt {
+        font-weight: bold;
+        color: #2c3e50;
+        width: auto;
+        float: none;
+        margin-bottom: 5px;
+    }
+
+    .dl-horizontal dd {
+        margin-left: 0;
+        margin-bottom: 10px;
+        color: #34495e;
+    }
+
+    .description p {
+        margin: 5px 0;
+        text-indent: 20px;
+    }
+
+    .price {
+        font-size: 1.3em;
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .form-actions {
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 1em;
+        border-radius: 4px;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+    .btn-secondary {
+        background-color: #bdc3c7;
+        color: #2c3e50;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #95a5a6;
+        }
+</style>
+
+<div class="product-delete-container">
+    <h2>CONFIRM PRODUCT DELETE INFORMATION</h2>
+    <h3>Are you sure you want to delete this product?</h3>
+    <p style="color: red; font-weight: bold;">@Html.Raw(ViewBag.ErrorMessage)</p>
+
+    <div class="product-info">
+        <div class="product-image">
+            @if (Model.ProductImages.Any())
+            {
+                <img src="~/Images/@Model.ProductImages.First().ImageURL" alt="@Model.ProductName" />
+            }
+            else
+            {
+                <span>No Image Available</span>
+            }
+        </div>
+
+        <div class="product-details-content">
+            <dl class="dl-horizontal">
+                <dt>Seller:</dt>
+                <dd>@ViewBag.SellerFullName</dd>
+
+                <dt>Product Name:</dt>
+                <dd>@Html.DisplayFor(model => model.ProductName)</dd>
+
+                <dt>Description:</dt>
+                <dd class="description">
+                    <p>@Html.Raw(Model.Description.Replace("\n", "</p><p>"))</p>
+                </dd>
+
+                <dt>Price:</dt>
+                <dd class="price">@Html.DisplayFor(model => model.Price) VND</dd>
+
+                <dt>Stock Quantity:</dt>
+                <dd>@Html.DisplayFor(model => model.StockQuantity)</dd>
+
+                <dt>Category:</dt>
+                <dd>@ViewBag.CategoryName</dd>
+
+                <dt>Created Date:</dt>
+                <dd>@String.Format("{0:dd/MM/yyyy}", Model.CreatedDate)</dd>
+
+                <dt>Status:</dt>
+                <dd>@Html.DisplayFor(model => model.Status)</dd>
+            </dl>
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>

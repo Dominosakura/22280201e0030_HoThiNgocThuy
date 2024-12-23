@@ -1,0 +1,183 @@
+﻿@model IEnumerable<Candy.Models.ProductImage>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/Content/CSS.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<style>
+    .pagination {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .pagination a {
+            padding: 10px 15px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            text-decoration: none;
+            color: #007bff;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+            .pagination a.active {
+                background-color: #007bff;
+                color: white;
+                border: 1px solid #007bff;
+            }
+
+            .pagination a:hover {
+                background-color: #0056b3;
+                color: white;
+            }
+
+    .no-underline-black {
+        text-decoration: none;
+        color: black;
+    }
+
+    .thumbnail {
+        margin-bottom: 30px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+        .thumbnail:hover {
+            transform: scale(1.05);
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: auto;
+            transition: opacity 0.3s ease;
+        }
+
+        .thumbnail:hover img {
+            opacity: 0.8;
+        }
+
+    .caption h4 {
+        min-height: 70px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .caption p {
+        font-size: 14px;
+        color: #555;
+    }
+
+    .btn-group .btn {
+        margin-top: 10px;
+        padding: 8px 15px;
+        border-radius: 25px;
+    }
+
+    .badge-danger {
+        position: absolute;
+        top: 50px;
+        left: 10px;
+        background-color: #f44336;
+        color: white;
+        padding: 8px 15px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 50px;
+        transform: rotate(-45deg); 
+        transform-origin: top left;
+        text-transform: uppercase;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+        .badge-danger:hover {
+            background-color: #d32f2f;
+            transform: rotate(-45deg) scale(1.1);
+        }
+
+    .container {
+        margin-top: 40px;
+        padding: 0 15px;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .col-lg-2, .col-md-3, .col-sm-4, .col-xs-6 {
+        display: flex;
+        justify-content: center;
+
+
+    }
+</style>
+
+<div style="height: 80px;"></div>
+<p>
+    @Html.Action("CategoryPartical", "PageHome", new { htmlAttributes = new { @class = "category-section" } })
+</p>
+
+<div class="container">
+    <div class="text-center">
+        <h2>PRODUCT</h2>
+    </div>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            var productStatus = Html.Action("CheckProductStatus", "Product", new { productId = item.ProductID }).ToString();
+
+
+            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                <div class="thumbnail" style="text-align:center; position:relative;">
+                    <img src="~/Images/@item.ImageURL" alt="Thumbnail Image" class="img-fluid img-rounded" style="width:150px; height:150px;">
+
+
+                    @if (productStatus == "Inactive")
+                    {
+                        <span class="badge badge-danger">Inactive</span>
+                    }
+
+
+                    <div class="caption">
+                        <h4>
+                            <a href="@Url.Action("Details", "Product", new { id = item.ProductID })" class="no-underline-black">
+                                @item.Product.ProductName
+                            </a>
+                        </h4>
+                        <p class="text-center">@String.Format("{0:N0} VNĐ", item.Product.Price)</p>
+                        <div class="btn-group" role="group">
+                            <a href="@Url.Action("ThemGioHang", "Cart", new { productID = item.ProductID, returnUrl = Request.Url.ToString() })" class="btn btn-primary" role="button">
+                                <span class="fas fa-shopping-cart"></span> Add to cart
+                            </a>
+
+                            <form action="@Url.Action("AddToFavorites", "Buyer", new { productId = item.ProductID })" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-outline-secondary">
+                                    <i class="fas fa-heart" style="color: red;"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        @for (int i = 1; i <= Math.Ceiling((decimal)ViewBag.TotalProducts / 60); i++)
+        {
+            <a href="@Url.Action("Index", new { page = i, keyword = ViewBag.CurrentKeyword })" class="@(i == ViewBag.CurrentPage ? "active" : "")">@i</a>
+        }
+    </div>
+</div>

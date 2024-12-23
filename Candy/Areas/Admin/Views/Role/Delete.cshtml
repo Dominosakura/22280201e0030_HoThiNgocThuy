@@ -1,0 +1,60 @@
+﻿@model Candy.Models.User
+
+<h2 class="text-danger text-center">DELETE ACCOUNT</h2>
+<h4 class="text-center text-muted">Are you sure you want to delete this user?</h4>
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger text-center mt-3">
+        @Html.Raw(ViewBag.ErrorMessage)
+    </div>
+}
+
+<div class="card mt-4">
+    <div class="card-body">
+        <h5 class="card-title">User Information</h5>
+        <hr />
+
+        <dl class="row">
+            <dt class="col-sm-4">Username:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Username)</dd>
+
+            <dt class="col-sm-4">Email:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Email)</dd>
+
+            <dt class="col-sm-4">Full Name:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.FullName)</dd>
+
+            <dt class="col-sm-4">Role:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Role)</dd>
+
+            <dt class="col-sm-4">Phone:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.PhoneNumber)</dd>
+
+            <dt class="col-sm-4">Address:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Address)</dd>
+
+            <dt class="col-sm-4">Avatar:</dt>
+            <dd class="col-sm-8">
+                @if (!string.IsNullOrEmpty(Model.AvatarPath))
+                {
+                    <img src="~/Images/Avatar/@Model.AvatarPath" alt="Avatar" class="img-thumbnail" style="width: 100px; height: 100px;" />
+                }
+                else
+                {
+                    <span>No Avatar</span>
+                }
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <button type="submit" class="btn btn-danger me-2">Delete</button>
+        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-secondary" })
+    }
+</div>

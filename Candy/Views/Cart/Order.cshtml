@@ -1,0 +1,205 @@
+﻿@model Candy.Models.Order
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2 class="page-title">Place Your Order</h2>
+
+<div class="order-container">
+    <!-- Recipient Information -->
+    <div class="order-info">
+        <h3 class="section-title">Recipient Information</h3>
+        @using (Html.BeginForm("Order", "Cart", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label for="RecipientName">Recipient:</label>
+                <input type="text" name="RecipientName" value="@ViewBag.Buyer.FullName" class="form-control" placeholder="Enter recipient's name" required />
+            </div>
+            <div class="form-group">
+                <label for="shippingAddress">Shipping Address:</label>
+                <textarea name="shippingAddress" class="form-control" rows="3" placeholder="Enter shipping address" required>@ViewBag.Buyer.Address</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="PhoneNumber">Phone Number:</label>
+                <input type="text" name="PhoneNumber" value="@ViewBag.Buyer.PhoneNumber" class="form-control" placeholder="Enter phone number" required />
+            </div>
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input type="email" name="Email" value="@ViewBag.Buyer.Email" class="form-control" placeholder="Enter email address" required />
+            </div>
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method:</label>
+                <select name="paymentMethod" class="form-control" required>
+                    <option value="" disabled selected>Select payment method</option>
+                    <option value="Credit Card">Credit/Debit Card</option>
+                    <option value="E-wallet">E-wallet (e.g., PayPal, MoMo, ZaloPay)</option>
+                    <option value="COD">Cash on Delivery (COD)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="couponCode">Discount Code:</label>
+                <input type="text" name="couponCode" class="form-control" placeholder="Enter discount code (if any)" />
+            </div>
+            <div class="form-group">
+                <label for="paymentAmount">Total Amount:</label>
+                <input type="text" name="paymentAmount" value="@String.Format("{0:N0}", ViewBag.TotalAmount) VNĐ" class="form-control" readonly />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        }
+    </div>
+
+    <!-- Cart Information -->
+    <div class="cart-info">
+        <h3 class="section-title">Your Cart</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.CartItems)
+                {
+                    <tr>
+                        <td>@item.Product.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@String.Format("{0:N0}", item.Product.Price) VNĐ</td>
+                        <td>@String.Format("{0:N0}", item.Quantity * item.Product.Price) VNĐ</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="cart-summary">
+            <p><strong>Total Items:</strong> @ViewBag.TotalQuantity</p>
+            <p><strong>Total Amount:</strong> @String.Format("{0:N0} VNĐ", ViewBag.TotalAmount)</p>
+        </div>
+    </div>
+</div>
+
+<!-- CSS Styles -->
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f9f9fb;
+        color: #333;
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 2.2rem;
+        margin: 20px 0;
+        color: #4a4a8a;
+        font-weight: 600;
+    }
+
+    .order-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+        margin: 30px auto;
+        max-width: 1100px;
+        padding: 10px;
+    }
+
+    .order-info, .cart-info {
+        flex: 1;
+        min-width: 48%;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: #4a4a8a;
+        text-align: center;
+        border-bottom: 2px solid #e0e0f5;
+        padding-bottom: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        background: #f7f7f7;
+        transition: border-color 0.2s ease;
+    }
+
+        .form-control:focus {
+            border-color: #4a4a8a;
+            outline: none;
+        }
+
+    .btn-primary {
+        background: #4a4a8a;
+        color: white;
+        padding: 12px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-align: center;
+        display: inline-block;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s;
+    }
+
+        .btn-primary:hover {
+            background: #3a3a7a;
+        }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+        .table th, .table td {
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-size: 0.9rem;
+        }
+
+        .table th {
+            background: #f3f3f9;
+            color: #4a4a8a;
+        }
+
+    .table-striped tbody tr:nth-child(odd) {
+        background: #f9f9fb;
+    }
+
+    .table-striped tbody tr:nth-child(even) {
+        background: #ffffff;
+    }
+
+    .cart-summary p {
+        margin: 10px 0;
+        font-size: 1rem;
+        color: #555;
+    }
+</style>

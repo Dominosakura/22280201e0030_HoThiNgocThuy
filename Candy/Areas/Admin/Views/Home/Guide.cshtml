@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "User Guide";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="guide-title">Candy E-commerce Management System User Guide</h2>
+
+<div class="guide-container">
+    @if (ViewBag.Page == 1)
+    {
+        <section>
+            <h3>1. Product Category Management</h3>
+            <p>On the "Product Category Management" page, you can perform actions such as:</p>
+            <ul>
+                <li><strong>Add a new category:</strong> Click the <em>"Add Category"</em> button and enter the category name, description, and image.</li>
+                <li><strong>Edit a category:</strong> Click the <em>"Edit"</em> button to modify category information.</li>
+                <li><strong>Delete a category:</strong> Click the <em>"Delete"</em> button to remove a category from the system. The system will ask for confirmation before deletion.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>2. Product Management</h3>
+            <p>On the "Product Management" page, you can:</p>
+            <ul>
+                <li><strong>Add a new product:</strong> Click the <em>"Add Product"</em> button and fill in details such as product name, category, price, quantity, and product image.</li>
+                <li><strong>Edit a product:</strong> Click the <em>"Edit"</em> button to modify product information.</li>
+                <li><strong>Delete a product:</strong> Click the <em>"Delete"</em> button to remove a product from the system.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>3. Order Management</h3>
+            <p>On the "Order Management" page, you can:</p>
+            <ul>
+                <li><strong>View order list:</strong> View the placed orders with details such as order ID, customer, and shipping status.</li>
+                <li><strong>Update order status:</strong> Edit the order status (processing, shipped, cancelled).</li>
+                <li><strong>Cancel an order:</strong> Delete an order if the customer requests cancellation.</li>
+            </ul>
+        </section>
+
+    }
+    else if (ViewBag.Page == 2)
+    {
+        <section>
+            <h3>4. User Management and Role Assignment</h3>
+            <p>On the "User Management" page, you can:</p>
+            <ul>
+                <li><strong>User list:</strong> View the list of users who have registered in the system.</li>
+                <li><strong>Assign roles:</strong> Assign roles to users (Admin, Seller, Buyer), and adjust permissions based on roles.</li>
+                <li><strong>Edit user information:</strong> Update user account information such as name, email, and password.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>5. Admin Account Management</h3>
+            <p>On the "Admin Account Management" page, you can:</p>
+            <ul>
+                <li><strong>Add a new admin account:</strong> Grant admin rights to a new account.</li>
+                <li><strong>Edit an admin account:</strong> Change the information and permissions of admin accounts.</li>
+                <li><strong>Delete an admin account:</strong> Remove an admin account if no longer needed.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>6. Policies and System Settings</h3>
+            <p>In the "Policies and System Settings" section, you can:</p>
+            <ul>
+                <li><strong>Update sales policies:</strong> Edit the store's terms and policies.</li>
+                <li><strong>System settings:</strong> Modify system configuration information, such as store name, logo, contact email.</li>
+                <li><strong>Manage admin accounts:</strong> Add, edit, or delete admin accounts and assign roles to users.</li>
+            </ul>
+        </section>
+    }
+</div>
+
+<div class="pagination">
+    @if (ViewBag.Page > 1)
+    {
+        <a href="@Url.Action("Guide", new { page = ViewBag.Page - 1 })" class="btn btn-primary">Previous Page</a>
+    }
+    @if (ViewBag.Page < 2)
+    {
+        <a href="@Url.Action("Guide", new { page = ViewBag.Page + 1 })" class="btn btn-primary">Next Page</a>
+    }
+</div>
+
+<style>
+    .pagination {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 1.2em;
+    }
+
+        .pagination .btn {
+            margin: 0 5px;
+            font-size: inherit;
+        }
+
+    .guide-title {
+        text-align: center;
+        color: #2c3e50;
+        font-size: 32px;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #1d3557;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+
+    .guide-container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        margin: 0 auto;
+        border-left: 5px solid #1d3557;
+    }
+
+    section {
+        margin-bottom: 30px;
+        padding: 15px;
+        border-left: 4px solid #457b9d;
+        background-color: #f1faff;
+        border-radius: 4px;
+    }
+
+    body {
+        font-size: 1.4em;
+    }
+</style>

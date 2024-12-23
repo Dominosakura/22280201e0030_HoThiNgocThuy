@@ -1,0 +1,107 @@
+﻿@model Candy.Models.Product
+
+<h2 class="text-center mb-5" style="color: #6f42c1; font-weight: bold;">UPDATE PRODUCT QUANTITY</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger text-center">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success text-center">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-body">
+                    <h4 class="text-center mb-4" style="color: #6f42c1; font-size: 1.5rem;">Product: @Model.ProductName</h4>
+
+                    <form action="@Url.Action("AddQuantity", "Seller")" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" name="productId" value="@Model.ProductID" />
+
+                        <div class="form-group">
+                            <label for="quantityToAdd" class="font-weight-bold">Quantity to add:</label>
+                            <input type="number" class="form-control form-control-lg" id="quantityToAdd" name="quantityToAdd" min="1" required placeholder="Enter quantity" />
+                        </div>
+
+                        <div class="form-group text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg px-4 py-2">Update Quantity</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a href="@Url.Action("SellerProducts", "Seller")" class="btn btn-outline-secondary btn-lg px-4 py-2">Back to Products</a>
+</div>
+
+<style>
+    .container {
+        margin-top: 40px;
+    }
+
+    .card {
+        border-radius: 16px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+    .alert {
+        font-size: 1.1em;
+        font-weight: bold;
+        border-radius: 8px;
+    }
+
+    .btn-outline-secondary {
+        border-color: #6f42c1;
+        color: #6f42c1;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-size: 1.1rem;
+        padding: 10px 30px;
+        border-radius: 30px;
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: #6f42c1;
+            color: white;
+        }
+
+    .btn-primary {
+        background-color: #6f42c1;
+        border-color: #6f42c1;
+        transition: background-color 0.3s ease;
+        font-size: 1.1rem;
+        padding: 10px 30px;
+        border-radius: 30px;
+    }
+
+        .btn-primary:hover {
+            background-color: #5a36a1;
+            border-color: #5a36a1;
+        }
+
+    .form-control-lg {
+        font-size: 1.1rem;
+        padding: 15px;
+    }
+
+    .font-weight-bold {
+        font-weight: 600;
+    }
+</style>

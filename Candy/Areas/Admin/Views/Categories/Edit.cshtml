@@ -1,0 +1,98 @@
+﻿@model Candy.Models.ProductCategory
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<head>
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+</head>
+<h2>Edit Product Category</h2>
+
+@using (Html.BeginForm("Edit", "Categories", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Product Category</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-6">
+                <!-- Category ID (Read-only) -->
+                <div class="form-group">
+                    <label class="control-label">Category ID:</label>
+                    <input type="text" class="form-control" value="@Model.CategoryID" readonly />
+                </div>
+
+                <!-- Category Name -->
+                <div class="form-group">
+                    <label class="control-label">Category Name:</label>
+                    @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Description with CKEditor -->
+                <div class="form-group">
+                    <label class="control-label">Description:</label>
+                    @Html.TextAreaFor(model => model.Description, new { @id = "editor1", @class = "form-control", rows = "5" })
+                </div>
+                <script>
+                    CKEDITOR.replace('editor1');
+                </script>
+
+                <!-- CreatedBy (Read-only) -->
+                <div class="form-group">
+                    <label class="control-label">Created By:</label>
+                    @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+
+                <!-- CreatedDate (Read-only) -->
+                <div class="form-group">
+                    <label class="control-label">Created Date:</label>
+                    @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-6">
+                <!-- Image Upload -->
+                <div class="form-group">
+                    <label class="control-label">Image:</label>
+                    <input type="file" name="fFileUpload" class="form-control" />
+                    <div class="mt-2">
+                        <img src="~/Images/@Model.ImageURL" width="120" alt="Current Image" />
+                    </div>
+                </div>
+
+                <!-- UpdatedBy -->
+                <div class="form-group">
+                    <label class="control-label">Updated By:</label>
+                    @Html.EditorFor(model => model.UpdatedBy, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UpdatedBy, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- UpdatedDate -->
+                <div class="form-group">
+                    <label class="control-label">Updated Date:</label>
+                    @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group mt-3">
+            <div class="col-md-12 text-center">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "CategoriesList", null, new { @class = "btn btn-secondary mt-3" })
+</div>

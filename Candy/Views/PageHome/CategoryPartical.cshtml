@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Candy.Models.ProductCategory>
+
+<h2 class="text-center">Category</h2>
+<div class="category-carousel">
+    <div class="carousel-content">
+        @foreach (var item in Model)
+        {
+            <div class="category">
+                <div class="image-container">
+                    <img src="~/Images/@item.ImageURL" alt="Thumbnail Image" class="img-responsive img-rounded" />
+                </div>
+                <div class="link-container">
+                    <a href="@Url.Action("CategoryByProduct", "Product", new { categoryId = item.CategoryID })">
+                        <h4 class="category-title">@item.CategoryName</h4>
+                    </a>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+<!-- CSS Style remains unchanged -->
+
+
+<style>
+    .link-container a {
+        text-decoration: none;
+        color: #000000;
+        font-size: 0.5em;
+    }
+
+        .link-container a:hover {
+            color: darkblue;
+        }
+
+    .category-carousel {
+        display: flex;
+        overflow-x: auto;
+        max-width: 100%; 
+        padding: 10px;
+    }
+
+    .carousel-content {
+        display: flex; 
+    }
+
+    .category {
+        margin: 5px; 
+        flex: 0 0 calc(10% - 10px); 
+        text-align: center; 
+    }
+
+    .image-container {
+        width: 120px; 
+        height: 120px; 
+        overflow: hidden; 
+        border-radius: 50%; 
+        margin: 0 auto; 
+    }
+
+        .image-container img {
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+        }
+
+    .category-title {
+        font-size: 0.9rem;
+        margin-top: 5px; 
+        text-align: center; 
+    }
+</style>

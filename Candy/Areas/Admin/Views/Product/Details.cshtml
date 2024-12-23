@@ -1,0 +1,130 @@
+﻿@model Candy.Models.Product
+
+<style type="text/css">
+    .product-details {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+        .product-details h2 {
+            text-align: center;
+            color: #2C3E50;
+        }
+
+        .product-details .product-image {
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .product-details .dl-horizontal dt {
+            font-weight: bold;
+            width: 150px;
+        }
+
+        .product-details .dl-horizontal dd {
+            margin-left: 0;
+            padding-left: 150px;
+        }
+
+        .product-details .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+            .product-details .btn-container a {
+                margin: 0 10px;
+                padding: 10px 20px;
+                background-color: #3498db;
+                color: white;
+                border-radius: 5px;
+                text-decoration: none;
+            }
+
+                .product-details .btn-container a:hover {
+                    background-color: #2980b9;
+                }
+
+        .product-details .description p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .product-details .product-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+            .product-details .product-info div {
+                flex: 1;
+                min-width: 300px;
+            }
+
+            .product-details .product-info img {
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+            }
+
+            .product-details .product-info .price {
+                font-size: 1.2em;
+                color: #e74c3c;
+            }
+</style>
+
+<div class="product-details">
+    <h2>PRODUCT DETAILS</h2>
+
+    <div class="product-info">
+        <div class="product-image">
+            @if (Model.ProductImages.Any()) // Check if there are any images
+            {
+                <img src="~/Images/@Model.ProductImages.First().ImageURL" alt="@Model.ProductName" />
+            }
+            else
+            {
+                <span>No Image Available</span>
+            }
+        </div>
+
+        <div class="product-details-content">
+            <dl class="dl-horizontal">
+                <dt>Seller</dt>
+                <dd>@ViewBag.SellerFullName</dd>
+
+                <dt>Product Name</dt>
+                <dd>@Html.DisplayFor(model => model.ProductName)</dd>
+
+                <dt>Description</dt>
+                <dd class="description">
+                    @Html.Raw(Model.Description.Replace("\n", "</p><p>&nbsp;&nbsp;&nbsp;&nbsp;"))
+                </dd>
+
+                <dt>Price</dt>
+                <dd class="price">
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+
+                <dt>Stock Quantity</dt>
+                <dd>@Html.DisplayFor(model => model.StockQuantity)</dd>
+
+                <dt>Category</dt>
+                <dd>@ViewBag.CategoryName</dd>
+
+                <dt>Creation Date</dt>
+                <dd>@String.Format("{0:dd/MM/yyyy}", Model.CreatedDate)</dd>
+
+                <dt>Status</dt>
+                <dd>@Html.DisplayFor(model => model.Status)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <a href="@Url.Action("Edit", "Products", new { id = Model.ProductID })">Edit</a>
+        <a href="@Url.Action("Index", "Product",  new { area = "Admin" })">Back to list</a>
+    </div>
+</div>

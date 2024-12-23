@@ -1,0 +1,157 @@
+﻿
+<head>
+    <link rel="stylesheet" href="~/Content/Demo.css">
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        h2.text-center {
+            color: #800080; 
+        }
+
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background-color: #fff; 
+        }
+
+        .logo {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .form-container {
+            flex: 1;
+            padding: 30px;
+            border: 1px solid #ccc; 
+            border-radius: 10px; 
+            background-color: #f9f9f9;
+        }
+
+        .form-group {
+            margin-bottom: 20px; 
+        }
+
+            .form-group label {
+                font-weight: bold; 
+                color: #333; 
+            }
+
+        .form-control {
+            border: 1px solid #ccc;
+            border-radius: 5px; 
+            padding: 10px; 
+            width: 100%;
+            box-sizing: border-box; 
+        }
+
+            .form-control:focus {
+                border-color: #007bff; 
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            }
+
+        .btn-custom {
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            width: 150px;
+            display: block; 
+            text-align: center; 
+            margin-bottom: 10px; 
+            background-color: #d1c4e9; 
+            color: white; 
+            border: none; 
+        }
+
+            .btn-custom:hover {
+                background-color: #b39ddb; 
+                color: white;
+            }
+
+        .forgot-password-link {
+            color: #800080;
+            text-decoration: none; 
+            font-weight: bold; 
+            transition: color 0.3s ease; 
+        }
+
+            .forgot-password-link:hover {
+                color: #7b68ee; 
+                text-decoration: underline; 
+            }
+
+
+        .error-message {
+            color: red; 
+            margin-bottom: 20px; 
+        }
+    </style>
+</head>
+
+<h2 class="text-center">LOGIN</h2>
+
+<div class="container">
+    <div class="logo">
+        <img src="~/Images/logo.png" alt="Logo" style="max-width: 100%; height: auto;">
+    </div>
+
+    <div class="form-container">
+        <h4 class="error-message text-center">@ViewBag.ThongBao</h4>
+
+        @using (Html.BeginForm("DangNhap", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+            <div class="form-group">
+                <label for="TenDN" class="text-center" >Account</label>
+                @Html.TextBox("Username", null, new { @class = "form-control", @placeholder = "Please enter the account!" })
+                <span class="text-danger">@ViewData["Err1"]</span>
+            </div>
+            <div class="form-group">
+                <label for="Password" class="text-center">Password</label>
+                <div class="input-group">
+                    @Html.Password("Password", new { @class = "form-control", @placeholder = "Enter password", id = "Password" })
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('Password')">Show</button>
+                    </div>
+                </div>
+                <span class="text-danger">@ViewBag.Err2</span>
+            </div>
+
+
+            <div class="form-group text-center" style="display: flex; justify-content: left; gap: 10px;">
+                <input type="submit" value="Login" class="btn btn-custom" />
+                <a href="@Url.Action("DangKy", "User")" class="btn btn-custom">Resgister</a>
+            </div>
+
+            <div class="text-center fs-8" style="display: flex; justify-content: left;">
+                <a href="@Url.Action("ForgotPassword","User")" class="forgot-password-link"> Forgot password?</a>
+            </div>
+
+
+        }
+    </div>
+</div>
+
+<script>
+    function togglePassword(id) {
+        var passwordField = document.getElementById(id);
+        var passwordToggleBtn = event.target;
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            passwordToggleBtn.textContent = "Show";
+        } else {
+            passwordField.type = "password";
+            passwordToggleBtn.textContent = "Show";
+        }
+    }
+</script>
+

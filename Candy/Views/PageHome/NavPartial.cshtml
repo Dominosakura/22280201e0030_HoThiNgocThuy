@@ -1,0 +1,457 @@
+﻿@using Candy.Models
+<head>
+    <link rel="stylesheet" href="~/Content/CSS.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+    .btn-toggle {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        border-radius: 0.375rem;
+        text-transform: uppercase;
+        padding: 8px 12px;
+        width: calc(100% + 2px); 
+    }
+
+   
+    .dropdown-item {
+        font-size: 1.1rem; 
+        padding: 10px 15px;
+       
+    }
+
+       
+        .btn-toggle:hover,
+        .dropdown-item:hover {
+            background-color: #e9ecef;
+            color: #5a5a5a;
+        }
+
+    
+        .navbar-nav .dropdown {
+            position: relative;
+        }
+
+        .navbar-nav .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .navbar-nav .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px;
+            color: #000;
+            text-decoration: none;
+        }
+
+            .dropdown-menu a:hover {
+                background-color: #f1f1f1;
+            }
+
+      
+        .brand-name {
+            color: purple; 
+            text-align: center;
+            font-size: 1.5rem; 
+            margin-top: 10px; 
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            flex-grow: 1; 
+            justify-content: space-between; 
+        }
+
+        .navbar {
+            height: 100%;
+            margin-top: 150px;
+        }
+
+        .navbar-nav {
+            align-items: center;
+            height: 100%; 
+        }
+
+  
+    #productManagementMenu .btn-toggle {
+        font-size: 1.3rem; 
+        padding: 10px 15px;
+        font-weight: bold;
+    }
+
+    
+    #productManagementMenu .dropdown-item {
+        font-size: 1.2rem; 
+        padding: 10px 20px; 
+    }
+
+      
+        #productManagementMenu .dropdown-item:hover {
+            background-color: #e9ecef;
+            color: #000;
+        }
+
+
+    #orderManagementMenu .btn-toggle {
+        font-size: 1.3rem; 
+        padding: 10px 15px; 
+        font-weight: bold;
+    }
+
+   
+    #orderManagementMenu .dropdown-item {
+        font-size: 1.2rem; 
+        padding: 10px 20px; 
+    }
+
+        
+        #orderManagementMenu .dropdown-item:hover {
+            background-color: #e9ecef;
+            color: #000;
+        }
+
+
+    #inventoryManagementMenu .btn-toggle {
+        font-size: 1.3rem;
+        padding: 10px 15px; 
+        font-weight: bold;
+    }
+
+    
+    #inventoryManagementMenu .dropdown-item {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+
+       
+        #inventoryManagementMenu .dropdown-item:hover {
+            background-color: #e9ecef;
+            color: #000;
+        }
+
+    .row.w-100 {
+        display: flex;
+        justify-content: center;
+    }
+
+        .search-bar {
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+
+            .search-bar input {
+                width: 500px;
+                border: 1px solid #ced4da;
+                padding: 5px;
+            }
+
+        .search-icon {
+            margin-left: 10px;
+        }
+
+
+        .navbar-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        
+
+        .navbar {
+            height: 100%;
+        }
+
+        .navbar-nav,
+        .navbar-icons {
+            align-items: center;
+            height: 150%;
+        }
+
+    .dropdown-menu-custom {
+        display: none;
+        position: absolute;
+        background-color: white;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        list-style: none;
+        text-align: left;
+    }
+
+            .dropdown-menu-custom li {
+                margin-bottom: 10px;
+            }
+
+                .dropdown-menu-custom li:last-child {
+                    margin-bottom: 0;
+                }
+
+        .dropdown-menu-custom a {
+            text-decoration: none;
+            color: #333;
+            text-align: left;
+        }
+
+                .dropdown-menu-custom a:hover {
+                    text-decoration: underline;
+                }
+
+    .equal-width {
+        width: 200px;
+        text-align: left;
+      
+        .btn-toggle
+
+    {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        border-radius: 0.375rem;
+        text-transform: uppercase;
+    }
+
+    
+    .btn-toggle:hover,
+    .dropdown-item:hover {
+        background-color: #e9ecef;
+        color: #5a5a5a;
+    }
+
+    .equal-width {
+        text-align: left;
+        width: 100%;
+    }
+
+    }
+
+    </style>    
+</head>
+
+<header>
+    <div class="container-fluid">
+        <div class="row py-3 border-bottom align-items-center">
+            <!-- Logo -->
+            <div class="col-sm-4 col-lg-2 d-flex flex-column align-items-center justify-content-center">
+                <a href="index.html" class="d-flex align-items-center">
+                    <img src="~/Images/Logo.png" alt="logo" class="img-fluid">
+                </a>
+                <div class="candy-text">CANDY</div>
+            </div>
+
+
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light col-lg-10">
+                <div class="container-fluid">
+                    <div class="nav-container">
+                        <!-- Container for dropdown, search, and icons -->
+                        <ul class="navbar-nav list-unstyled d-flex flex-row gap-3 mb-0 fw-bold text-uppercase text-dark">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#">
+                                    HOME
+                                </a>
+
+
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Action("Index", "PageHome")">HOME</a></li>
+                                    <li><a href="@Url.Action("Index", "Product")">PRODUCT</a></li>
+                                    <li><a href="@Url.Action("ShowFavorites", "Buyer")">FAVORITE</a></li>
+                                    <li><a href="@Url.Action("MyOrders", "Buyer")">MY ORDER</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- Search bar -->
+                        <form id="search-form" class="w-100" action="@Url.Action("Index", "Product")" method="get">
+                            <div class="form-group d-flex">
+                                <input type="text" class="form-control border-0 bg-transparent" name="keyword" placeholder="Search for more than 20,000 products" aria-label="Search" style="flex-grow: 1;">
+                                <button type="submit" class="btn btn-default ms-2">
+                                    <i class="bi bi-search fs-5"></i> <!-- Bootstrap Search icon -->
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- User, Wishlist, and Cart Icons -->
+                        <div class="navbar-icons">
+                            <ul class="d-flex list-unstyled m-0 gap-3">
+                                <li class="nav-item">
+                                    <span class="navbar-text">
+                                        @if (Session["User"] != null)
+                                        {
+                                            var user = (User)Session["User"];
+                                            <span>Hello, @user.Username</span> <!-- Hiển thị tên người dùng nếu đã đăng nhập -->
+                                        }
+                                        else
+                                        {
+                                            <span>Hello, Guest</span> <!-- Hiển thị "Guest" nếu chưa đăng nhập -->
+                                        }
+
+                                    </span>
+                                </li>
+
+                                <!-- User Dropdown -->
+                                <li class="nav-item dropdown">
+                                    <a href="#" class="nav-link p-2" id="userDropdown">
+                                        <i class="bi bi-person fs-2"></i> <!-- Larger User icon -->
+                                    </a>
+                                    <ul class="dropdown-menu-custom" id="dropdownMenu">
+                                        @if (Session["User"] != null)
+                                        {
+                                            var user = (User)Session["User"];
+
+                                            <li><a class="dropdown-item" href="@Url.Action("Profile", "User")">Profile</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("Logout", "User")">Logout</a></li>
+
+                                            if (user.IdRole == 2)
+                                            {
+                                                <li>
+                                                    <button class="btn btn-toggle dropdown-toggle w-100 text-left border rounded shadow-sm py-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+                                                        Sales Channel
+                                                    </button>
+                                                </li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li><a class="dropdown-item" href="@Url.Action("DangNhap", "User")">Login</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("DangKy", "User")">Sign up</a></li>
+                                        }
+                                    </ul>
+                                </li>
+
+                                <!-- Wishlist Icon -->
+                                <li>
+                                    <a href="#" class="p-2">
+                                        <i class="bi bi-bell-fill" style="font-size: 34px; color:#d576e0"></i><!-- Larger Wishlist icon -->
+                                    </a>
+                                </li>
+
+                                <!-- Shopping Bag Icon -->
+                                <li style="position: relative;">
+                                    <a href="@Url.Action("GioHang", "Cart")" id="gioHangLink" style="display: flex; align-items: center;">
+                                        <i class="bi bi-cart4" style="font-size: 34px; color:#d576e0"></i>
+                                        <span id="gioHangCount" style="position: absolute; top: 0; right: 0; font-size: 12px; color: red; font-weight: bold; background-color: white; border-radius: 50%; padding: 2px 5px;">
+                                            @Html.Action("GioHangPartial", "Cart")
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+
+
+
+                        <!-- JavaScript for Dropdown -->
+                        <script>
+                            // Toggle dropdown visibility on click
+                            document.getElementById('userDropdown').addEventListener('click', function (event) {
+                                event.preventDefault(); // Prevent the default anchor behavior
+                                const dropdownMenu = document.getElementById('dropdownMenu');
+                                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+                            });
+
+                            // Close the dropdown when clicking outside
+                            document.addEventListener('click', function (event) {
+                                const userDropdown = document.getElementById('userDropdown');
+                                const dropdownMenu = document.getElementById('dropdownMenu');
+                                if (!userDropdown.contains(event.target)) {
+                                    dropdownMenu.style.display = 'none';
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Sales Channels Dropdown -->
+            <div class="col-lg-2">
+  
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar">
+                    <div class="offcanvas-header justify-content-between">
+                        <h4 class="fw-normal text-uppercase fs-5">Menu</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="navbar-nav menu-list list-unstyled d-flex flex-column gap-md-3 mb-0">
+                            <!-- Product Management -->
+                            <div>
+                                <button class="btn btn-toggle w-100 py-2 border-0 equal-width" data-bs-toggle="collapse" data-bs-target="#productManagementMenu">
+                                    <i class="bi bi-boxes me-2"></i> Product Management
+                                </button>
+                                <div id="productManagementMenu" class="collapse ps-3">
+                                    <a href="@Url.Action("SellerProducts","Seller")" class="dropdown-item">All Products</a>
+                                    <a href="@Url.Action("AddProduct","Seller")" class="dropdown-item">Add Product</a>
+                                </div>
+                            </div>
+                            <!-- Order Management -->
+                            <div>
+                                <button class="btn btn-toggle w-100 py-2 border-0 equal-width" data-bs-toggle="collapse" data-bs-target="#orderManagementMenu">
+                                    <i class="bi bi-truck me-2"></i> Order Management
+                                </button>
+                                <div id="orderManagementMenu" class="collapse ps-3">
+                                    <a href="@Url.Action("OrderList","Seller")" class="dropdown-item">Update Orders</a>
+                                </div>
+                            </div>
+                            <!-- Marketing Channels -->
+                            <div>
+                                <button class="btn btn-toggle w-100 py-2 border-0 equal-width" data-bs-toggle="collapse" data-bs-target="#marketingChannelsMenu">
+                                    <i class="bi bi-megaphone me-2"></i> Marketing Channels
+                                </button>
+                                <div id="marketingChannelsMenu" class="collapse ps-3">
+                                    <a href="@Url.Action("Index","Coupon")" class="dropdown-item">Discount Codes</a>
+                                    <a href="@Url.Action("Create","Coupon")" class="dropdown-item">Promotions</a>
+                                </div>
+                            </div>
+
+                        
+                            <!-- Sales Analysis -->
+                            <div>
+                                <button class="btn btn-toggle w-100 py-2 border-0 equal-width" data-bs-toggle="collapse" data-bs-target="#salesAnalysisMenu">
+                                    <i class="bi bi-bar-chart me-2"></i> Sales Analysis
+                                </button>
+                                <div id="salesAnalysisMenu" class="collapse ps-3">
+                                    <a href="#" class="dropdown-item">Revenue Report</a>
+                                    <a href="#" class="dropdown-item">Performance Metrics</a>
+                                </div>
+                            </div>
+                            <!-- Customer Care -->
+                            <div>
+                                <button class="btn btn-toggle w-100 py-2 border-0 equal-width" data-bs-toggle="collapse" data-bs-target="#customerCareMenu">
+                                    <i class="bi bi-person-check me-2"></i> Customer Care
+                                </button>
+                                <div id="customerCareMenu" class="collapse ps-3">
+                                    <a href="#" class="dropdown-item">Manage Messages</a>
+                                    <a href="#" class="dropdown-item">Manage Reviews</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+</header>

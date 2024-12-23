@@ -1,0 +1,172 @@
+﻿@model Candy.Models.User
+
+
+
+<head>
+    <link rel="stylesheet" href="~/Content/Demo.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <img src="~/Images/Logo.png" alt="Logo" class="img-fluid" style="max-width: 150px;" />
+    </div>
+
+    <h4 class="text-danger text-center">@ViewBag.Message</h4>
+
+    <h2 class="text-center mb-4">REGISTER</h2>
+
+    @using (Html.BeginForm("DangKy", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="FullName">Full Name</label>
+                    @Html.TextBox("FullName", null, new { @class = "form-control", id = "FullName" })
+                    @ViewData["errFullName"]
+                </div>
+
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="Username">Username</label>
+                    @Html.TextBox("Username", null, new { @class = "form-control", id = "Username" })
+                    @ViewData["errUsername"]
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="Password">Password</label>
+                    <div class="input-group">
+                        @Html.Password("Password", new { @class = "form-control", id = "Password" })
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('Password')">Show</button>
+                        </div>
+                    </div>
+                    @ViewData["errPassword"]
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label for="PasswordConfirm">Confirm Password</label>
+                    <div class="input-group">
+                        @Html.Password("PasswordConfirm", new { @class = "form-control", id = "PasswordConfirm" })
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('PasswordConfirm')">Show</button>
+                        </div>
+                    </div>
+                    @ViewData["errPasswordConfirm"]
+                </div>
+
+                <!-- ID Role -->
+                <div class="form-group">
+                    <label>Role:</label><br />
+                    @Html.RadioButton("IdRole", "2", new { id = "seller" }) Seller
+                    @Html.RadioButton("IdRole", "1", new { id = "buyer" }) Buyer
+                    @ViewData["errRole"]
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="Email">Email:</label>
+                    @Html.TextBox("Email", null, new { @type = "email", @class = "form-control", id = "Email" })
+                    @ViewData["errEmail"]
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label for="PhoneNumber">Phone Number</label>
+                    @Html.TextBox("PhoneNumber", null, new { @type = "tel", @class = "form-control", id = "PhoneNumber" })
+                    @ViewData["errPhoneNumber"]
+                </div>
+
+                <!-- Address -->
+                <div class="form-group">
+                    <label for="Address">Address</label>
+                    @Html.TextBox("Address", null, new { @class = "form-control", id = "Address" })
+                    @ViewData["errAddress"]
+                </div>
+
+                <!-- Submit and Clear Buttons -->
+                <div class="form-group d-flex justify-content-between">
+                    <input type="submit" value="Register" class="btn btn-primary w-48" />
+                    <input type="reset" value="Clear" class="btn btn-secondary w-48" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        background-color: #f4f7fc;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+    }
+
+    h2 {
+        color: #343a40;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 25px;
+    }
+
+    .btn-primary {
+        background-color: #6f42c1;
+        border-color: #6f42c1;
+    }
+
+        .btn-primary:hover {
+            background-color: #5a2e8e;
+            border-color: #5a2e8e;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+    .input-group-append button {
+        font-weight: bold;
+        border-radius: 25px;
+    }
+
+    .w-48 {
+        width: 48%;
+    }
+
+    .text-danger {
+        margin-bottom: 20px;
+    }
+</style>
+
+<script>
+    function togglePassword(id) {
+        var input = document.getElementById(id);
+        input.type = (input.type === "password") ? "text" : "password";
+    }
+</script>
